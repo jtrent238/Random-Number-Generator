@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpRaven.Nancy</name>
+    </assembly>
+    <members>
+        <member name="T:SharpRaven.Nancy.Data.NancyContextJsonPacketFactory">
+            <summary>
+            <see cref="T:Nancy.NancyContext"/>-based implementation of <see cref="T:SharpRaven.Data.IJsonPacketFactory"/>.
+            </summary>
+        </member>
+        <member name="M:SharpRaven.Nancy.Data.NancyContextJsonPacketFactory.OnCreate(SharpRaven.Data.JsonPacket)">
+            <summary>
+            Called when the <see cref="T:SharpRaven.Data.JsonPacket"/> has been created. Can be overridden to
+            adjust the values of the <paramref name="jsonPacket"/> before it is sent to Sentry.
+            </summary>
+            <param name="jsonPacket">The json packet.</param>
+            <returns>
+            The <see cref="T:SharpRaven.Data.JsonPacket"/>.
+            </returns>
+        </member>
+        <member name="T:SharpRaven.Nancy.SentryRegistrations">
+            <summary>
+            SharpRaven-specific implementation of <see cref="T:Nancy.Bootstrapper.IRegistrations"/> to expose a different
+            default implementation of <see cref="T:SharpRaven.Data.IJsonPacketFactory"/> so <see cref="T:Nancy.NancyContext"/>
+            specific data can be sent to Sentry.
+            </summary>
+        </member>
+        <member name="P:SharpRaven.Nancy.SentryRegistrations.CollectionTypeRegistrations">
+            <summary>
+            Gets the collection registrations to register for this startup task
+            </summary>
+        </member>
+        <member name="P:SharpRaven.Nancy.SentryRegistrations.InstanceRegistrations">
+            <summary>
+            Gets the instance registrations to register for this startup task
+            </summary>
+        </member>
+        <member name="P:SharpRaven.Nancy.SentryRegistrations.TypeRegistrations">
+            <summary>
+            Gets the type registrations to register for this startup task
+            </summary>
+        </member>
+        <member name="T:SharpRaven.Nancy.SentryRequestStartup">
+            <summary>
+            SharpRaven's <see cref="T:Nancy.Bootstrapper.IRequestStartup"/> implementation.
+            Used to register exception handling to the start of the error handling pipeline.
+            </summary>
+        </member>
+        <member name="M:SharpRaven.Nancy.SentryRequestStartup.#ctor(SharpRaven.IRavenClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SharpRaven.Nancy.SentryRequestStartup"/> class.
+            </summary>
+            <param name="ravenClient">The raven client.</param>
+            <exception cref="T:System.ArgumentNullException">ravenClient</exception>
+        </member>
+        <member name="M:SharpRaven.Nancy.SentryRequestStartup.Initialize(Nancy.Bootstrapper.IPipelines,Nancy.NancyContext)">
+            <summary>
+            Perform any initialisation tasks
+            </summary>
+            <param name="pipelines">Application pipelines</param>
+            <param name="context">The current context</param>
+        </member>
+        <member name="T:SharpRaven.Nancy.NancyConfiguration">
+            <summary>
+            Nancy-specific configuration for SharpRaven.
+            </summary>
+        </member>
+        <member name="F:SharpRaven.Nancy.NancyConfiguration.NancyContextDataSlot">
+            <summary>
+            Gets the nancy context data slot.
+            </summary>
+            <value>
+            The nancy context data slot.
+            </value>
+        </member>
+        <member name="F:SharpRaven.Nancy.NancyConfiguration.SentryEventGuidKey">
+            <summary>
+            Gets the key for the GUID returned from Sentry after a successfully logged exception.
+            </summary>
+            <value>
+            The key for the GUID returned from Sentry after a successfully logged exception.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.NancyConfiguration.CaptureExceptionOnError">
+            <summary>
+            Gets the &lt;captureExceptionOnError /&gt; configuration element.
+            </summary>
+            <value>
+            The &lt;captureExceptionOnError /&gt; configuration element.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.NancyConfiguration.PipelineName">
+            <summary>
+            Gets the &lt;pipelineName /&gt; configuration element.
+            </summary>
+            <value>
+            The &lt;pipelineName /&gt; configuration element.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.NancyConfiguration.Settings">
+            <summary>
+            Gets the &lt;sharpRaven/&gt; configuration element.
+            </summary>
+            <value>
+            The the &lt;sharpRaven/&gt; configuration element.
+            </value>
+        </member>
+        <member name="T:SharpRaven.Nancy.NancyConfiguration.CaptureExceptionOnErrorElement">
+            <summary>
+            The &lt;captureExceptionOnError /&gt; configuration element.
+            </summary>
+        </member>
+        <member name="P:SharpRaven.Nancy.NancyConfiguration.CaptureExceptionOnErrorElement.Value">
+            <summary>
+            Gets or sets the value of the the &lt;captureExceptionOnError /&gt; configuration element.
+            </summary>
+            <value>
+              <c>true</c> if exceptions should be captured by SharpRaven; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:SharpRaven.Nancy.NancyConfiguration.PipelineNameElement">
+            <summary>
+            The &lt;pipelineName /&gt; configuration element.
+            </summary>
+        </member>
+        <member name="P:SharpRaven.Nancy.NancyConfiguration.PipelineNameElement.Value">
+            <summary>
+            Gets or sets the value of the &lt;pipelineName /&gt; configuration element.
+            </summary>
+            <value>
+            The value of the the &lt;pipelineName /&gt; configuration element.
+            </value>
+        </member>
+        <member name="T:SharpRaven.Nancy.Data.NancySentryRequest">
+            <summary>
+            The Request information is stored in the Http interface. Two arguments are required: url and method.
+            </summary>
+        </member>
+        <member name="M:SharpRaven.Nancy.Data.NancySentryRequest.#ctor(Nancy.NancyContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SharpRaven.Nancy.Data.NancySentryRequest"/> class.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+        </member>
+        <member name="M:SharpRaven.Nancy.Data.NancySentryRequest.GetRequest(Nancy.NancyContext)">
+            <summary>
+            Gets the request.
+            </summary>
+            <returns>
+            If an HTTP contest is available, an instance of <see cref="T:SharpRaven.Nancy.Data.NancySentryRequest"/>, otherwise <c>null</c>.
+            </returns>
+        </member>
+        <member name="M:SharpRaven.Nancy.Data.NancySentryRequest.GetUser">
+            <summary>
+            Gets the user.
+            </summary>
+            <returns>
+            If an HTTP context is available, an instance of <see cref="T:SharpRaven.Data.SentryUser"/>, otherwise <c>null</c>.
+            </returns>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Cookies">
+            <summary>
+            Gets or sets the cookies.
+            </summary>
+            <value>
+            The cookies.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Data">
+            <summary>
+            The data variable should only contain the request body (not the query string). It can either be a dictionary (for standard HTTP requests) or a raw request body.
+            </summary>
+            <value>
+            The data.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Environment">
+            <summary>
+            The env variable is a compounded dictionary of HTTP headers as well as environment information passed from the webserver.
+            Sentry will explicitly look for REMOTE_ADDR in env for things which require an IP address.
+            </summary>
+            <value>
+            The environment.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Headers">
+            <summary>
+            Gets or sets the headers.
+            </summary>
+            <value>
+            The headers.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Method">
+            <summary>
+            Gets or sets the method of the HTTP request.
+            </summary>
+            <value>
+            The method of the HTTP request.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.QueryString">
+            <summary>
+            Gets or sets the query string.
+            </summary>
+            <value>
+            The query string.
+            </value>
+        </member>
+        <member name="P:SharpRaven.Nancy.Data.NancySentryRequest.Url">
+            <summary>
+            Gets or sets the URL of the HTTP request.
+            </summary>
+            <value>
+            The URL of the HTTP request.
+            </value>
+        </member>
+    </members>
+</doc>
